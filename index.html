@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>6-Hour Execution Sprint — Kanban</title>
+  <meta name="color-scheme" content="dark" />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1622;
+      --card:#111826;
+      --border:#223044;
+      --text:#e9f1fb;
+      --muted:#8aa0b6;
+      --accent:#7dd3fc;
+      --warn:#fbbf24;
+      --good:#34d399;
+      --bad:#fb7185;
+      --r:16px;
+      --r2:12px;
+      --gap:14px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1100px 750px at 20% 0%, #0f2140 0%, var(--bg) 55%) fixed;
+      color:var(--text);
+    }
+    /* Fits well inside Google Sites embed frames */
+    .wrap{
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+    .top{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:flex-end; justify-content:space-between;
+      padding: 14px 14px 16px;
+      border:1px solid var(--border);
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    }
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .sub{margin-top:4px;color:var(--muted);font-size:12.5px}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border:1px solid rgba(34,48,68,.9);
+      border-radius:999px;
+      background: rgba(17,24,38,.55);
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .pill b{color:var(--text)}
+
+    .board{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(240px, 1fr));
+      gap: var(--gap);
+      align-items:start;
+    }
+    @media (max-width: 1100px){ .board{ grid-template-columns: repeat(2, minmax(240px, 1fr)); } }
+    @media (max-width: 640px){ .board{ grid-template-columns: 1fr; } }
+
+    .col{
+      border:1px solid var(--border);
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(15,22,34,.92), rgba(10,16,26,.92));
+      overflow:hidden;
+      min-height: 420px;
+    }
+    .colHead{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      padding: 12px;
+      border-bottom:1px solid rgba(34,48,68,.7);
+      background: rgba(255,255,255,.03);
+    }
+    .colName{display:flex; align-items:center; gap:10px; font-weight:800; font-size:13px}
+    .dot{width:9px; height:9px; border-radius:50%}
+    .count{
+      font-size:12px; color:var(--muted);
+      padding:4px 8px;
+      border:1px solid rgba(34,48,68,.7);
+      border-radius:999px;
+      background: rgba(17,24,38,.55);
+    }
+    .colBody{padding:12px; display:flex; flex-direction:column; gap:10px}
+
+    .card{
+      border:1px solid rgba(34,48,68,.95);
+      border-radius: var(--r2);
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(17,30,48,.92), rgba(12,20,33,.94));
+    }
+    .title{margin:0; font-size:13px; line-height:1.25; font-weight:850}
+    .meta{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+    .chip{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(34,48,68,.9);
+      background: rgba(27,42,63,.75);
+      color:#b7c7d8;
+      font-size:12px;
+    }
+    .tinyDot{width:6px; height:6px; border-radius:50%}
+    .desc{margin-top:8px; color:#cbd8e6; font-size:12.5px; line-height:1.35; white-space:pre-wrap}
+
+    .list{margin-top:10px; display:flex; flex-direction:column; gap:6px}
+    .item{
+      display:flex; gap:8px; align-items:flex-start;
+      padding:7px 8px;
+      border-radius:12px;
+      background: rgba(9,14,22,.35);
+      border:1px solid rgba(34,48,68,.55);
+    }
+    .box{width:12px; height:12px; border-radius:3px; border:1px solid rgba(42,59,85,.95); margin-top:2px}
+    .itxt{font-size:12.5px; color:#d8e6f6; line-height:1.25}
+
+    .foot{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      opacity: .95;
+    }
+    a{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>6-Hour Execution Sprint — Kanban</h1>
+        <div class="sub">Embed this page inside Google Sites (Insert → Embed → By URL)</div>
+      </div>
+      <div class="pill"><b>Heads up:</b> Google Sites won’t run pasted HTML — embed the hosted URL.</div>
+    </div>
+
+    <div class="board">
+      <!-- Backlog -->
+      <section class="col">
+        <div class="colHead">
+          <div class="colName"><span class="dot" style="background:var(--muted)"></span>Backlog</div>
+          <div class="count">3</div>
+        </div>
+        <div class="colBody">
+
+          <div class="card">
+            <p class="title">LOCK AI CLASSIFICATION (Non-negotiable)</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 0–1</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--bad)"></span>Critical</span>
+            </div>
+            <div class="desc">Remove all ambiguity about who you are, what you offer, where you are.</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Insert Search-First Anchor Paragraph immediately below nav</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Insert Intent Bridge directly below hero</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Confirm both are visible in the DOM (not hidden, not collapsed)</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <p class="title">PROGRAM SECTION STRUCTURE (Homepage)</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 1–2</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--bad)"></span>Critical</span>
+            </div>
+            <div class="desc">Machine clarity + human energy. Convert ALL homepage programs to a consistent structure using already-written copy.</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Literal SEO H2 + Emotional sub-heading for each program</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Apply already-written copy (no rewriting)</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Sections: Flying Trapeze, Parkour, Trampoline & Acrobatics, Tiny Flyers, Camps/Birthdays/Memberships, Corporate</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <p class="title">VALIDATION PASS (First 300 words only)</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 2–3</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--bad)"></span>Critical</span>
+            </div>
+            <div class="desc">Homepage reads like a story, not a sitemap. Re-order sections if needed — do NOT rewrite tone.</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Run: console.log(document.body.innerText);</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Audit first 300 words only</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Confirm: Who / What / Where</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Re-order sections if needed (no tone rewrite)</span></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- In Progress -->
+      <section class="col">
+        <div class="colHead">
+          <div class="colName"><span class="dot" style="background:var(--accent)"></span>In Progress</div>
+          <div class="count">1</div>
+        </div>
+        <div class="colBody">
+
+          <div class="card">
+            <p class="title">REVENUE PAGE QUICK WINS</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 3–4</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--warn)"></span>High</span>
+            </div>
+            <div class="desc">Capture high-intent traffic already arriving.</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Add FAQ block + Local schema to Birthday Parties</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Add 1-paragraph SEO anchor to Gift Cards</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Insert Corporate Team-Building section (already-written copy)</span></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Review -->
+      <section class="col">
+        <div class="colHead">
+          <div class="colName"><span class="dot" style="background:var(--warn)"></span>Validate / Review</div>
+          <div class="count">1</div>
+        </div>
+        <div class="colBody">
+
+          <div class="card">
+            <p class="title">YOUTH SYSTEM ROLLOUT (Fast)</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 4–5</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--warn)"></span>High</span>
+            </div>
+            <div class="desc">Consistency + ranking protection across youth pages.</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Apply saved “Why This Matters” block to Trampoline, Acrobatics, Camps</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Ensure headline format consistency</span></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Done -->
+      <section class="col">
+        <div class="colHead">
+          <div class="colName"><span class="dot" style="background:var(--good)"></span>Done</div>
+          <div class="count">1</div>
+        </div>
+        <div class="colBody">
+
+          <div class="card">
+            <p class="title">FINAL LOCK & COVERAGE CHECK</p>
+            <div class="meta">
+              <span class="chip"><span class="tinyDot" style="background:var(--accent)"></span>HOUR 5–6</span>
+              <span class="chip"><span class="tinyDot" style="background:var(--bad)"></span>Critical</span>
+            </div>
+            <div class="desc">Zero loose ends. Confirm: no duplicate intros, “Santa Barbara” present naturally, no dead-end paragraphs (lint rule).</div>
+            <div class="list">
+              <div class="item"><span class="box"></span><span class="itxt">Re-run innerText on: Homepage, Parkour, one youth page</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Confirm: No duplicate intros</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Confirm: “Santa Barbara” present naturally</span></div>
+              <div class="item"><span class="box"></span><span class="itxt">Confirm: No dead-end paragraphs (lint rule)</span></div>
+            </div>
+          </div>
+
+          <div class="foot">
+            If you need this editable inside Canva itself, use the PDF version you uploaded (Canva edits PDFs much better than embeds).\n
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
